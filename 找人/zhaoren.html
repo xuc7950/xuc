@@ -45,9 +45,9 @@
         var secondUrl = "http://stu.zstu.edu.cn/webroot/decision/view/report?fine_auth_token=&viewlet=%2Fyiban%2FS第二课堂学分.cpt&op=h5&__pi__=true&username=";
         var elelogUrl = "http://stu.zstu.edu.cn/webroot/decision/view/report?fine_auth_token=&viewlet=%2Fyiban%2FS寝室充电查询.cpt&op=h5&__pi__=true&username=";
         var electricUrl = "http://stu.zstu.edu.cn/webroot/decision/view/report?fine_auth_token=&viewlet=%2Fyiban%2FS寝室电费查询.cpt&op=h5&__pi__=true&username=";
-
+		
         for (var i=0;i<index.length;i++){
-//                 var str = "<input type='button' value='成绩' onclick='location.href="+scoreUrl+"' />";
+				if (zstu[index[i]].姓名.match("xuc7950"))	zstu[index[i]].姓名 = "徐超";
                 var score = "<a href='"+scoreUrl+zstu[index[i]].学号+"&xingming="+zstu[index[i]].姓名+"' >成绩</a>";
                 var lesson = "<a href='"+lessonUrl+zstu[index[i]].学号+"' >课表</a>";
                 var exam = "<a href='"+examUrl+zstu[index[i]].学号+"' >考试安排</a>";
