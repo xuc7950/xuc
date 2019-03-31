@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="user-scalable=0" name="viewport" />
+    <title>导入单词</title>
+    <link href='http://cdn.webfont.youziku.com/webfonts/nomal/119439/46871/5c4ade97f629d80b2c94e6e5.css' rel='stylesheet' type='text/css' />
+    <style media="screen">
+      #content{
+        width:950px;
+        height:1500px;
+        background:rgba(255,255,255,0.2);
+        margin-top:10px;
+        padding:10px;
+      }
+      table{
+        width:100%;
+        font-size:3em;
+        margin-top:10px;
+      }
+      .c_head{
+        font-family:'ruibo17299ec9591d28f';
+      }
+      th{
+        font-size:1.5em;
+        height:50px;
+        color:white;
+        border:1px white solid;
+      }
+      input{
+        width:100%;
+        font-size:1.2em;
+      }
+      .first{
+        position:absolute;
+        margin:100px;
+        margin-top: 250px;
+        width:800px;
+        height:900px;
+        background: #cc9;
+        border-radius: 20px;
+        display: none;
+      }
+    </style>
+	  <script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript">
+      var num = 1;
+      window.onload = function(){
+        //背景大小调整
+        document.getElementById("content").style.width = window.innerWidth;
+        document.getElementById("content").style.height = window.innerHeight;
+        if (localStorage['first']==undefined) $('#first').show(1000);
+      }
+      function add(){
+        num++;
+        var record = "<tbody name='tr"+num+"'><tr align='center'><td bgcolor='lightblue'></td><td><input type='text' style='height:85px;' name='w"+num+"'></td><td><input type='text' style='height:85px;' name='t"+num+"'></td><td align='center' style='background:yellow;border-radius:50px;font-weight:bold;' onclick='add()'>+</td><td align='center' id='tr"+num+"' style='background:red;border-radius:50px;font-weight:bold;' onclick='del(this.id)'>-</td></tr></tbody>";
+        document.getElementById('tb1').innerHTML += record;
+
+        //排序
+        var d=1;
+        var n = document.getElementsByTagName('td').length/5;
+        for (var i=0;i<n*5;i+=5){
+          document.getElementsByTagName('td')[i].innerHTML=d;
+          d++;
+        }
+      }
+
+
+      function del(id){
+        if (!(document.getElementsByTagName('td').length/5<2)){
+          var rows = document.getElementsByName(id)[0];
+          var count = rows.childElementCount; //5
+          for (var i=1;i<=count;i++){
+            rows.removeChild(rows.lastElementChild);
+          }
+          //document.getElementsByName(n)[0].style.display = 'none';
+
+          //排序
+          var d=1;
+          var n = document.getElementsByTagName('td').length;
+          for (var i=0;i<n;i+=5){
+            document.getElementsByTagName('td')[i].innerHTML=d;
+            d++;
+          }
+        }
+      }
+      function show(){
+          if ((document.getElementsByTagName('input')[0].value != "") && (document.getElementsByTagName('input')[1].value != "")){
+            var n = document.getElementsByTagName('td').length/5;
+            var words = "";
+              words += "[";
+            for (var i=0;i<n*2;i+=2){
+              if (n*2-i != 2){
+                  words += "{\"word\":\""+document.getElementsByTagName('input')[i].value+"\",";
+                  words += "\"translate\":\""+document.getElementsByTagName('input')[i+1].value+"\"},\n";
+              }else{
+                  words += "{\"word\":\""+document.getElementsByTagName('input')[i].value+"\",";
+                  words += "\"translate\":\""+document.getElementsByTagName('input')[i+1].value+"\"}\n";
+              }
+            }
+              words += "]";
+              localStorage['words'] = words;
+              document.getElementById('show').innerHTML = words;
+            location.href='word.html';
+          }else{
+            alert('请输入需要导入的词汇');
+            return false;
+          }
+      }
+
+    </script>
+  </head>
+  <body style="background:url('images/bg.jpg');">
+    <div class="first" id='first'>
+      <p style="font-size:3em;float:right;background:lightyellow;"><a onclick="localStorage['first']='done';$('#first').hide(1000)">&nbsp;不再提示&nbsp;</a></p>
+      <p style="font-size:3em;padding:10px;"><b>亲爱的用户，欢迎进入本单词记忆程序</b><br/><font color="red">碎片化的记忆让人太过苦恼？</font><font color="yellow">零散的单词不便于记忆？</font><font color="green">记忆的方式过于被动？</font>不妨来试试本程序，快速提高您记忆单词的效率！
+       <br/><b>【导入方法】</b>将手抄下来的单词以及翻译输进文本框，然后点击开始导入<br/><font size='6'><b>*</b>提示：在添加条目时先确定好添加数量，否则在添加时添加条目输入的数据将被刷新掉</font><br/><div align='center' style="border-radius:50px;font-size:5em;"><a onclick="$('#first').hide(1000);" style="background:white;border-radius:50px;">×</a></div>
+      </p>
+    </div>
+    <div id="content" align="center">
+      <table align='center' border="1" id='tb1'>
+        <tbody>
+          <tr align='center' class="c_head">
+            <th>条</th>
+            <th>单词</th>
+            <th>翻译</th>
+            <th>增</th>
+            <th>删</th>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr align='center' name='tr1'>
+            <td bgcolor='lightblue'>1</td>
+            <td>
+              <input type="text" style="height:85px;">
+            </td>
+            <td>
+              <input type="text" style="height:85px;">
+            </td>
+            <td align='center' style='background:yellow;border-radius:50px;font-weight:bold;' onclick='add()'>+</td>
+            <td align='center' id='tr1' style='background:red;border-radius:50px;font-weight:bold;' onclick='del(this.id)'>-</td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr align='center' name='tr2'>
+            <td bgcolor='lightblue'>2</td>
+            <td>
+              <input type="text" style="height:85px;">
+            </td>
+            <td>
+              <input type="text" style="height:85px;">
+            </td>
+            <td align='center' style='background:yellow;border-radius:50px;font-weight:bold;' onclick='add()'>+</td>
+            <td align='center' id='tr2' style='background:red;border-radius:50px;font-weight:bold;' onclick='del(this.id)'>-</td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr align='center' name='tr3'>
+            <td bgcolor='lightblue'>3</td>
+            <td>
+              <input type="text" style="height:85px;">
+            </td>
+            <td>
+              <input type="text" style="height:85px;">
+            </td>
+            <td align='center' style='background:yellow;border-radius:50px;font-weight:bold;' onclick='add()'>+</td>
+            <td align='center' id='tr3' style='background:red;border-radius:50px;font-weight:bold;' onclick='del(this.id)'>-</td>
+          </tr>
+        </tbody>
+      </table>
+      <input type="button"  value="开 始 导 入" align='center' onclick='show()' style="margin-top:10px;height:100px;font-size:3em;background:#88a;color:lightgray;font-weight:bold;border-radius:10px;">
+      <input type="button" value="背  单  词" align='center' onclick="location.href='word.html'" style="margin-top:10px;height:200px;font-size:5em;background:url('images/bg_btn.jpg');color:#555;font-weight:bold;border-radius:30px;">
+      <p align="center" style="margin-top:680px;color:gray;font-size:2em;">Copyright&copy;XuChao 2019-01-26 all right reserved<br/> http://39.108.213.4/index.asp
+        <a href="mailto:xuc7950@foxmail.com"><input type="button" value="Contact us" style="width:170px;font-size:1em;background:none;color:gray;"></a>
+        <a href="http://39.108.213.4/index.asp"><input type="button" value="Opinion" style="width:130px;font-size:1em;background:none;color:gray;"></a>
+      </p>
+      <textarea name="show" id="show" rows="8" cols="80" style="display: none;margin-top:20px;margin-left:20.5%;"></textarea>
+    </div>
+  </body>
+</html>
