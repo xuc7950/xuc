@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta content="user-scalable=0" name="viewport" />
+    <title>English</title>
+	<script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
+    <style media="screen">
+      .content{
+        width: 950px;
+        height:1100px;
+        font-size: 2em;
+        border-radius: 10px;
+        color:white;
+      }
+      .grade{
+        color:white;
+        font-size: 2em;
+      }
+      #tb{
+        width: 98%;
+        height:85%;
+        font-size: 2em;
+        border-radius: 10px;
+      }
+      tr{
+        width:1000px;
+        height:100px;
+      }
+      #word{
+        width: 100%;
+        height:200px;
+        font-size: 2.5em;
+      }
+      .choice{
+        width: 100%;
+        background: rgba(250,250,250,0.2);
+        color:white;
+        font-size: 1em;
+        height:100px;
+		    border:1px solid gray;
+      }
+      .err{
+        color:red;
+        background: rgba(250,250,250,0.5);
+        font-size:1.5em;
+        float:right;
+        width:30%;
+        border-radius: 50px;
+      }
+      .errContent{
+        width:56%;
+        height:900px;
+        background: rgba(250,250,250,0.9);
+        position:absolute;
+        top:27.2%;
+        left:43%;
+        border-radius: 10px;
+        display: none;
+        color:gray;
+        font-size:55px;
+        overflow-y: scroll;
+      }
+      #all_word{
+        display:none;
+        margin-top:175px;
+        position:absolute;
+        top:1px;
+        left:1px;
+        opacity:0.9;
+        border-radius: 10px;
+        width:100%;
+        height:1000px;
+        overflow-y: auto;
+        background:white;
+      }
+    </style>
+    <script type="text/javascript">
+      if(localStorage['words'] != undefined){
+        var words = JSON.parse(localStorage['words']);
+      }else{
+        alert("您未导入词汇，即将跳转至导入单词界面...");
+        location.href='add.html';
+      }
+      var yes = 0;
+      var no = 0;
+      var err;
+      var n = parseInt(Math.random()*(words.length));
+      var nc = parseInt(Math.random()*5)+1;
+      var c1 = parseInt(Math.random()*(words.length));
+      var c2 = parseInt(Math.random()*(words.length));
+      var c3 = parseInt(Math.random()*(words.length));
+      var c4 = parseInt(Math.random()*(words.length));
+      var c5 = parseInt(Math.random()*(words.length));
+      window.onload = function(){
+        document.getElementById("word").innerHTML = words[n].word;
+        document.getElementById("c1").innerHTML = words[c1].translate;
+        document.getElementById("c2").innerHTML = words[c2].translate;
+        document.getElementById("c3").innerHTML = words[c3].translate;
+        document.getElementById("c4").innerHTML = words[c4].translate;
+        document.getElementById("c5").innerHTML = words[c5].translate;
+        document.getElementById("c"+nc).innerHTML = words[n].translate;
+        document.getElementById("yes").innerHTML = yes;
+        document.getElementById("no").innerHTML = no;
+        document.getElementById("content").style.width = window.innerWidth;
+        document.getElementById("content").style.height = window.innerHeight;
+        //计时
+        var h = 0;
+        var m = 0;
+        var s = 0;
+        window.setInterval(function(){
+          //秒达到60
+          if (s==60){
+            s=0;
+            m++;
+          }
+          //分钟达到60
+          if (m==60){
+            m=0;
+            h++;
+          }
+          if (m>0) document.getElementById("m").innerHTML=m+"min";
+          if (h>0) document.getElementById("h").innerHTML=h+"hour";
+          document.getElementById("s").innerHTML = s+"sec";
+          s++;
+        },1000);
+
+    }
+    function next(id){
+      var selected = document.getElementById(id).innerHTML;
+      if (selected == words[n].translate){
+      document.getElementById(id).style.background="rgb(100,200,100)";
+      document.getElementById("true").play();
+      yes++;
+    }else{
+      document.getElementById(id).style.background="red";
+      for (var i=1;i<6;i++){
+        if (document.getElementById("c"+i).innerHTML == words[n].translate)
+            document.getElementById("c"+i).style.background="green";
+      }
+      err = words[n].word+words[n].translate;
+      document.getElementById("errContent").innerHTML += "<li>"+err+"</li><hr/>";
+      document.getElementById("false").play();
+      no++;
+    }
+    //提示已背词卡
+    if ((yes+no)%50==0 && (yes+no)!=0)  alert("恭喜已完成"+(yes+no)+"张词卡！\n"+"正确题数为："+yes+"\n错误题数为："+no);
+      setTimeout(function(){
+        n = parseInt(Math.random()*(words.length));
+        nc = parseInt(Math.random()*5)+1;
+        c1 = parseInt(Math.random()*(words.length));
+        c2 = parseInt(Math.random()*(words.length));
+        c3 = parseInt(Math.random()*(words.length));
+        c4 = parseInt(Math.random()*(words.length));
+        c5 = parseInt(Math.random()*(words.length));
+          document.getElementById("word").innerHTML = words[n].word;
+          document.getElementById("c1").innerHTML = words[c1].translate;
+          document.getElementById("c2").innerHTML = words[c2].translate;
+          document.getElementById("c3").innerHTML = words[c3].translate;
+          document.getElementById("c4").innerHTML = words[c4].translate;
+          document.getElementById("c5").innerHTML = words[c5].translate;
+          document.getElementById("c"+nc).innerHTML = words[n].translate;
+            //复位
+            document.getElementById("c1").style.background="rgba(250,250,250,0.2)";
+            document.getElementById("c2").style.background="rgba(250,250,250,0.2)";
+            document.getElementById("c3").style.background="rgba(250,250,250,0.2)";
+            document.getElementById("c4").style.background="rgba(250,250,250,0.2)";
+            document.getElementById("c5").style.background="rgba(250,250,250,0.2)";
+        },800);
+        document.getElementById("yes").innerHTML = yes;
+        document.getElementById("no").innerHTML = no;
+      }
+
+    function lookerr(){
+      /*
+      if (document.getElementById("errContent").style.display == "none"){
+        document.getElementById("errContent").style.display = "block";
+        document.getElementById("err").style.background = "rgba(250,250,250,0.2)";
+      }else{
+        document.getElementById("errContent").style.display = "none";
+        document.getElementById("err").style.background="rgba(250,250,250,0.5)";
+      }*/
+      $("#errContent").fadeToggle(500);
+    }
+    function listen(){
+      var url1 = "http://tsn.baidu.com/text2audio?tex=";
+      var text = document.getElementById("word").innerHTML;
+      var url2 = "&lan=zh&cuid=123&ctp=1&tok=25.4fe227926ad479b1f1774bfea1b13f48.315360000.1861350595.282335-15297333";
+      document.getElementById("play").src=url1+text+url2;
+      document.getElementById('play').play();
+      window.setTimeout(function(){
+        document.getElementById("plImg").style.opacity = 1;
+      },1000);
+    }
+    function sel(){
+      if (window.event.keyCode==49) next('c1');
+      if (window.event.keyCode==50) next('c2');
+      if (window.event.keyCode==51) next('c3');
+      if (window.event.keyCode==52) next('c4');
+      if (window.event.keyCode==53) next('c5');
+      if (window.event.keyCode==13) lookerr();
+      if (window.event.keyCode==72) listen();
+      if (window.event.keyCode==67) document.getElementById('change').click();
+    }
+    function show(){
+      var len = words.length;
+      var w_all = "";
+      for (var i=0;i<len;i++){
+        w_all += words[i].word+":"+words[i].translate+"<br/>";
+      }
+      document.write(w_all.fontsize('13em'));
+    }
+
+    function all_word(){
+      var len = words.length;
+      var w_all = "<h3>所有单词</h3>";
+      for (var i=0;i<len;i++){
+        w_all += "<li>"+words[i].word+":"+words[i].translate+"</li>";
+      }
+      document.getElementById('all_word').innerHTML = (w_all.fontsize('13em'));
+      $("#all_word").toggle(1000);
+    }
+    </script>
+  </head>
+  <body onkeypress="sel()" style="background:url('images/bg1.jpg');background-size:1920px 1600px;">
+    <audio id="false" src="//img95.699pic.com/audio/548/485/5aebfe383f5a2_all.mp3"></audio>
+    <audio id="true" src="//img95.699pic.com/audio/022/225/5aed6fc467764_all.mp3"></audio>
+    <audio id="play"></audio>
+    <div id="all_word"></div>
+    <div class="grade">
+      <br/>
+      <a style="color:rgb(100,200,100)">正确：</a><a id="yes"></a><br/>
+      <a style="color:red">错误：</a><a id="no"></a>
+      <a href="listen.html" style="float:right;text-decoration:none;">
+        <input id="change" type="button" value="听写➾" style="font-size:1.3em;border-radius:20px;opacity:0.5;"/>
+      </a>
+      <a onclick="location.href='add.html'" style="float:right;text-decoration:none;">
+        <input type="button" value="添加单词" style="color:gray;background:none;font-size:1.3em;border-radius:20px;opacity:0.5;"/>
+      </a>
+      <a onclick="all_word()" style="float:right;text-decoration:none;">
+        <input type="button" value="查看所有单词" style="color:gray;background:none;font-size:1.3em;border-radius:20px;opacity:0.5;"/>
+      </a>
+    </div>
+
+    <div class="content" id="content" align="center">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0"  id="tb" align="center">
+        <tr>
+          <th scope="col"  id="word" align="center">&nbsp;</th>
+        </tr>
+        <tr>
+          <td align="center" onclick="listen()"><img id="plImg" src="../images/play.png" width="70" height="70"/><sup style="font-size:30px;opacity:0.5;">(beta)</sup></td>
+        </tr>
+        <tr>
+          <td  class="choice" onclick="next(this.id)" id="c1" align="center">&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="choice" onclick="next(this.id)" id="c2" align="center">&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="choice" onclick="next(this.id)" id="c3" align="center">&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="choice" onclick="next(this.id)" id="c4" align="center">&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="choice" onclick="next(this.id)" id="c5" align="center">&nbsp;</td>
+        </tr>
+    </table>
+      <br/><br/><br/><br/><br/>
+      <span style="float:left;">
+        <a style="color:yellow;">已学习:</a>
+        <a id="h"></a>
+        <a id="m"></a>
+        <a id="s"></a>
+      </span>
+      <br/>
+      <div id="errContent" class="errContent" align="center"><a style="color:black">错题列表</a><hr/><hr/></div>
+      <div id="err" class="err" onclick="lookerr()">查看错题  </div>
+      </div>
+      <p align="center" style="margin-top:200px;color:gray;font-size:2em;">Copyright&copy;XuChao 2019-01-25 all right reserved<br/> http://39.108.213.4/index.asp
+        <a href="mailto:xuc7950@foxmail.com"><input type="button" value="Contact us" style="font-size:1em;background:none;color:gray;"></a>
+        <a href="http://39.108.213.4/index.asp"><input type="button" value="Opinion" style="font-size:1em;background:none;color:gray;"></a>
+      </p>
+  </body>
+</html>
