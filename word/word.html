@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta content="user-scalable=0" name="viewport" />
     <title>English</title>
+	<script src="wordLib1.json"></script>
 	<script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
     <style media="screen">
       .content{
@@ -76,7 +77,7 @@
       }
     </style>
     <script type="text/javascript">
-      if(localStorage['words'] != undefined){
+      if(localStorage.words != undefined){
         var words = JSON.parse(localStorage['words']);
       }else{
         alert("您未导入词汇，即将跳转至导入单词界面...");
@@ -124,8 +125,17 @@
           document.getElementById("s").innerHTML = s+"sec";
           s++;
         },1000);
-
+		
+		//初始化题库选项
+		if (localStorage.words == JSON.stringify(month)){
+			document.getElementById("wordLib").options.selectedIndex = '1';
+		}else if (localStorage.words == localStorage.skin){
+			document.getElementById("wordLib").options.selectedIndex = '0';
+		}else if (localStorage.words == JSON.stringify(adjective)){
+			document.getElementById("wordLib").options.selectedIndex = '2';
+		}
     }
+		
     function next(id){
       var selected = document.getElementById(id).innerHTML;
       if (selected == words[n].translate){
@@ -220,11 +230,24 @@
       document.getElementById('all_word').innerHTML = (w_all.fontsize('13em'));
       $("#all_word").toggle(1000);
     }
+	
+	function wordLib(sel){
+		if (sel.options.selectedIndex == "0"){
+			localStorage.words = localStorage.skin;
+		}else if (sel.options.selectedIndex == "1"){
+			localStorage.words = JSON.stringify(month);
+		}else if (sel.options.selectedIndex == "2"){
+			localStorage.words = JSON.stringify(adjective);
+		}
+		window.location.reload();
+	}
+	
+	
     </script>
   </head>
   <body onkeypress="sel()" style="background:url('images/bg1.jpg');background-size:1920px 1600px;">
-    <audio id="false" src="//img95.699pic.com/audio/548/485/5aebfe383f5a2_all.mp3"></audio>
-    <audio id="true" src="//img95.699pic.com/audio/022/225/5aed6fc467764_all.mp3"></audio>
+    <audio id="false" src="audio/true.wav"></audio>
+    <audio id="true" src="audio/false.mp3"></audio>
     <audio id="play"></audio>
     <div id="all_word"></div>
     <div class="grade">
@@ -233,13 +256,22 @@
       <a style="color:red">错误：</a><a id="no"></a>
       <a href="listen.html" style="float:right;text-decoration:none;">
         <input id="change" type="button" value="听写➾" style="font-size:1.3em;border-radius:20px;opacity:0.5;"/>
-      </a>
       <a onclick="location.href='add.html'" style="float:right;text-decoration:none;">
         <input type="button" value="添加单词" style="color:gray;background:none;font-size:1.3em;border-radius:20px;opacity:0.5;"/>
       </a>
       <a onclick="all_word()" style="float:right;text-decoration:none;">
         <input type="button" value="查看所有单词" style="color:gray;background:none;font-size:1.3em;border-radius:20px;opacity:0.5;"/>
       </a>
+		<a style="float:right;text-decoration:none;">
+			<button style=" border-radius:10px;">
+			<select id="wordLib" style="font-size:2em;width:120px;height:50px;" onchange="wordLib(this)" >
+				<option>自定义	</option>
+				<option>月份	</option>
+				<option>形容词	</option>
+			</select>
+			</button>
+		</a>
+	   </a>
     </div>
 
     <div class="content" id="content" align="center">
