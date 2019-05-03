@@ -67,6 +67,7 @@
     </style>
     <script id="lib" src="配乐3.json"></script>
     <script type="text/javascript">
+      var n = 8698;
 
     function inb(){
       var t = 0;
@@ -98,7 +99,6 @@
 
 
     window.onload = function(){
-      var n = 8698;
       var curPage = 1;
         for(var i=0;i<50;i++){
           if (i==0) continue;
@@ -192,7 +192,7 @@
 
     </table>
     <br/>
-<div align="center">
+<div align="center" id="indexButtom">
 <span id="pageNum" style="color:white;font-size:3em;text-align:center;">
 <a href="javascript:changeL()" style="text-decoration:none;"> < < < </a>
 &emsp;<a id="curPage"> </a>&emsp;
