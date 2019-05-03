@@ -140,26 +140,31 @@
 			var sDoneUrl = [];
 			var sDoneDes = [];
 			var j = 0;	//存储搜索结果长度/索引
-			for(var i=0;i<n;i++){
-				if (p.describe[i].includes(sText.value) ){
-					sDoneDes[j] = p.describe[i];
-					sDoneUrl[j] = p.url[i];
-					j++;
+				for(var i=0;i<n;i++){
+					if (p.describe[i].includes(sText.value) ){
+						sDoneDes[j] = p.describe[i];
+						sDoneUrl[j] = p.url[i];
+						j++;
+					}
 				}
-			}
-			
-			document.getElementById("indexButtom").style.display = "none";
-			document.getElementById('curPage').innerHTML = '1';
-			//清空
-			document.getElementById('show').innerHTML = "";
-			//开始替换
-			var title ="<tr style='background:darkgray;opacity:0.8;border-radius:10px;'><th scope='col'>描述</th><th scope='col'>操作</th></tr><tr style='font-size:1em;'><td>共搜索到"+j+"条音效</td></tr>";
-			var search = "<tr><td><input type='text' id='search' style='width:100%;height:50px;font-size:0.9em;opacity:0.8;border-radius:10px;'/></td><td><input type='button' id='searchEnter' onclick='search(document.getElementById(\"search\"))' style='width:80%;float:right;height:70px;font-size:0.9em;background:gray;opacity:0.8;border-radius:10px;' value='查  找'/></td></tr>";
-			document.getElementById('show').innerHTML += title+search;
-			  for(var i=0;i<j;i++){
-				content = "<tr style='color:white;'><td>"+sDoneDes[i]+"</td><td>"+"<input type='button' value='播放' onclick=\"sp('"+sDoneUrl[i]+"')\" id='p"+i+"' style='font-size:1em;border-radius:10px;background:none;color:white;'>"+"&emsp;<a href='"+sDoneUrl[i]+"'>下载</a>"+"</td></tr>";
-				document.getElementById('show').innerHTML += content;
-			  }
+				
+				document.getElementById("indexButtom").style.display = "none";
+				document.getElementById('curPage').innerHTML = '1';
+				//清空
+				document.getElementById('show').innerHTML = "";
+				//开始替换
+				var title ="<tr style='background:darkgray;opacity:0.8;border-radius:10px;'><th scope='col'>描述</th><th scope='col'>操作</th></tr><tr style='font-size:1em;'><td>共搜索到"+j+"条音效</td></tr>";
+				var search = "<tr><td><input type='text' id='search' style='width:100%;height:50px;font-size:0.9em;opacity:0.8;border-radius:10px;'/></td><td><input type='button' id='searchEnter' onclick='search(document.getElementById(\"search\"))' style='width:80%;float:right;height:70px;font-size:0.9em;background:gray;opacity:0.8;border-radius:10px;' value='查  找'/></td></tr>";
+				document.getElementById('show').innerHTML += title+search;
+
+				if (sText.value != ""){ 				 
+					for(var i=0;i<j;i++){
+						content = "<tr style='color:white;'><td>"+sDoneDes[i]+"</td><td>"+"<input type='button' value='播放' onclick=\"sp('"+sDoneUrl[i]+"')\" id='p"+i+"' style='font-size:1em;border-radius:10px;background:none;color:white;'>"+"&emsp;<a href='"+sDoneUrl[i]+"'>下载</a>"+"</td></tr>";
+						document.getElementById('show').innerHTML += content;
+					}
+				}else{
+					document.getElementById('show').innerHTML += "<td>请输入...</td>";
+				}
 		  }
     </script>
   </head>
@@ -169,7 +174,7 @@
     </audio>
 
 
-    <marquee style="color:red;font-size:30px;">资 源 免 费 提 供，敬 请 放 心 下 载 。 该 库 共 8 6 9 8 条 音 效 </marquee>
+    <marquee style="color:red;font-size:30px;">资 源 由 <a href="mailto:xuc7950@foxmail.com">Xuchao</a> 免 费 提 供 ， 敬 请 放 心 下 载 。 该 库 共 8 6 9 8 条 音 效 </marquee>
     <div id="libs" onclick="location.href='sounds3.html'">切换库</div>
     <div id="shuru" style="display:none;"><input id="pageInput" placeholder="0~101" type="text" style="height:100%;width:70%;font-size:55px;border-radius:12px;">
       <input type="button" value="跳转" onclick="jump()" style="height:100%;width:25%;font-size:55px;border-radius:12px;"/></div>
