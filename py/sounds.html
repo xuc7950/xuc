@@ -92,7 +92,7 @@
         document.getElementById('show').innerHTML += title;
           for(var i=(curPage-1)*50;i<curPage*50;i++){
             if (i==0) continue;
-            content = "<tr style='color:white;'><td>"+p.describe[i]+"</td><td>"+"<input type='button' value='播放' onclick=\"sp('"+p.url[i]+"')\" id='p"+i+"' style='font-size:1em;border-radius:10px;background:none;color:white;'>"+"&emsp;<a href='"+p.url[i]+"'>下载</a>"+"</td></tr>";
+            content = "<tr style='color:white;'><td>"+p.describe[i]+"</td><td>"+"<input type='button' value='播放' onclick=\"if(this.style.color=='gray'){this.style.color='white'}else{this.style.color='gray'};sp('"+p.url[i]+"')\" id='p"+i+"' style='font-size:1em;border-radius:10px;background:none;color:white;'>"+"&emsp;<a href='"+p.url[i]+"'>下载</a>"+"</td></tr>";
             document.getElementById('show').innerHTML += content;
           }
         }
@@ -102,7 +102,7 @@
       var curPage = 1;
         for(var i=0;i<50;i++){
           if (i==0) continue;
-          content = "<tr style='color:white;'><td>"+p.describe[i]+"</td><td>"+"<input type='button' value='播放' onclick=\"sp('"+p.url[i]+"')\" id='p"+i+"' style='font-size:1em;border-radius:10px;background:none;color:white;'>"+"&emsp;<a href='"+p.url[i]+"'>下载</a>"+"</td></tr>";
+          content = "<tr style='color:white;'><td>"+p.describe[i]+"</td><td>"+"<input type='button' value='播放' onclick=\"if(this.style.color=='gray'){this.style.color='white'}else{this.style.color='gray'};sp('"+p.url[i]+"')\" id='p"+i+"' style='font-size:1em;border-radius:10px;background:none;color:white;'>"+"&emsp;<a href='"+p.url[i]+"'>下载</a>"+"</td></tr>";
           document.getElementById('show').innerHTML += content;
         }
         document.getElementById('curPage').innerHTML = curPage;
@@ -159,16 +159,20 @@
 
 				if (sText.value != ""){ 				 
 					for(var i=0;i<j;i++){
-						content = "<tr style='color:white;'><td>"+sDoneDes[i]+"</td><td>"+"<input type='button' value='播放' onclick=\"sp('"+sDoneUrl[i]+"')\" id='p"+i+"' style='font-size:1em;border-radius:10px;background:none;color:white;'>"+"&emsp;<a href='"+sDoneUrl[i]+"'>下载</a>"+"</td></tr>";
+						content = "<tr style='color:white;'><td>"+sDoneDes[i]+"</td><td>"+"<input type='button' value='播放' onclick=\"if(this.style.color=='gray'){this.style.color='white'}else{this.style.color='gray'};sp('"+sDoneUrl[i]+"')\" id='p"+i+"' style='font-size:1em;border-radius:10px;background:none;color:white;'>"+"&emsp;<a href='"+sDoneUrl[i]+"'>下载</a>"+"</td></tr>";
 						document.getElementById('show').innerHTML += content;
 					}
 				}else{
 					document.getElementById('show').innerHTML += "<td>请输入...</td>";
 				}
 		  }
+		  function conSearch(e){
+			if (e.keyCode == 13)
+				search(document.getElementById('search'));
+		  }
     </script>
   </head>
-  <body style="background:url('bg.png');opacity:0;" vlink="green" alink="yellow">
+  <body style="background:url('bg.png');opacity:0;" vlink="green" alink="yellow" onkeypress="conSearch(window.event)">
     <audio autoplay id="audio">
       <source id="pl" type="audio/mpeg">
     </audio>
@@ -181,7 +185,7 @@
     <div id="jump" onclick="$('#shuru').slideToggle(1000);">直达</div>
     <div id='top'><a href="#show" style="text-decoration:none;color:white;">TOP</a></div>
     <table id="show" align="center">
-      <tr>
+      <tr align="center">
         <th scope="col"  style="background:darkgray;opacity:0.9;border-radius:10px;">描述</th>
         <th scope="col" style="background:darkgray;opacity:0.8;border-radius:10px;">操作</th>
       </tr>
