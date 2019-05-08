@@ -154,7 +154,7 @@
 				document.getElementById('show').innerHTML = "";
 				//开始替换
 				var title ="<tr style='background:darkgray;opacity:0.8;border-radius:10px;'><th scope='col'>描述</th><th scope='col'>操作</th></tr><tr style='font-size:1em;'><td>共搜索到"+j+"条音效</td></tr>";
-				var search = "<tr><td><input type='text' id='search' style='width:100%;height:50px;font-size:0.9em;opacity:0.8;border-radius:10px;'/></td><td><input type='button' id='searchEnter' onclick='search(document.getElementById(\"search\"))' style='width:80%;float:right;height:70px;font-size:0.9em;background:gray;opacity:0.8;border-radius:10px;' value='查  找'/></td></tr>";
+				var search = "<tr><td><input value='"+sText.value+"' type='text' id='search' style='width:100%;height:50px;font-size:0.9em;opacity:0.8;border-radius:10px;'/></td><td><input type='button' id='searchEnter' onclick='search(document.getElementById(\"search\"))' style='width:80%;float:right;height:70px;font-size:0.9em;background:gray;opacity:0.8;border-radius:10px;' value='搜  索'/></td></tr>";
 				document.getElementById('show').innerHTML += title+search;
 
 				if (sText.value != ""){ 				 
@@ -194,7 +194,7 @@
 			<input type="text" id="search" style="width:100%;height:50px;font-size:0.9em;opacity:0.8;border-radius:10px;"/>
 		</td>
 		<td>
-			<input type="button" id="searchEnter" onclick="search(document.getElementById('search'))" style="width:80%;float:right;height:70px;font-size:0.9em;background:gray;opacity:0.8;border-radius:10px;" value="查  找"/>
+			<input type="button" id="searchEnter" onclick="search(document.getElementById('search'))" style="width:80%;float:right;height:70px;font-size:0.9em;background:gray;opacity:0.8;border-radius:10px;" value="搜  索"/>
 		</td>
 	  </tr>
 
