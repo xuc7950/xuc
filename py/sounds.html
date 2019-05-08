@@ -141,7 +141,7 @@
 			var sDoneDes = [];
 			var j = 0;	//存储搜索结果长度/索引
 				for(var i=0;i<n;i++){
-					if (p.describe[i].includes(sText.value) ){
+					if (p.describe[i].match(sText.value) != null ){
 						sDoneDes[j] = p.describe[i];
 						sDoneUrl[j] = p.url[i];
 						j++;
