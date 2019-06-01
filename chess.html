@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>井字棋</title>
+    <style media="screen">
+      body{
+        background:url('https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1846871955,1328478303&fm=26&gp=0.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        -webkit-background-size: cover;
+        -o-background-size: cover;
+        background-position: center 0;
+      }
+      .btn{
+        width:100%;
+        height:100%;
+        background:none;
+        border:hidden;
+        font-size: 2em;
+        color:rgba(20,20,20,0.8);
+      }
+      .res{
+        text-align: center;
+        background: orange;
+      }
+    </style>
+    <script type="text/javascript">
+      var n;
+      var re = 0;
+      var p;
+      window.onload = function(){
+        n=1;
+      }
+
+        function iv(id){
+          return document.getElementById(id).value;
+        }
+
+
+                     function over(){
+                       if (re){
+                         return false;
+                       }
+                       for (var i=0;i<3;i++){
+                         //横向判断
+                         if (    document.getElementById("btn"+(i*3+1)).value == document.getElementById("btn"+(i*3+2)).value && document.getElementById("btn"+(i*3+2)).value == document.getElementById("btn"+(i*3+3)).value && document.getElementById("btn"+(i*3+3)).value != ""     ){
+                           if (document.getElementById("btn"+(i*3+1)).value == "X"){
+                             alert("X方胜！");
+                             document.getElementById("tb").innerHTML += "<tr><td colspan='3'><a class='res'>X方胜！</a><hr/><a>步数："+n+"</td></tr>";
+                             re = 1;
+                             break;
+                           }else{
+                             alert("O方胜！");
+                             document.getElementById("tb").innerHTML += "<tr><td colspan='3'><a class='res'>O方胜！</a><hr/><a>步数："+n+"</td></tr>";
+                             re = 1;
+                             break;
+                           }
+                         }
+
+                         //纵向判断
+                         if (      document.getElementById("btn"+(0*3+i+1)).value == document.getElementById("btn"+(1*3+i+1)).value && document.getElementById("btn"+(1*3+i+1)).value == document.getElementById("btn"+(2*3+i+1)).value && document.getElementById("btn"+(2*3+i+1)).value != ""    ){
+                           if (document.getElementById("btn"+(0*3+i+1)).value == "X"){
+                             alert("X方胜！");
+                             document.getElementById("tb").innerHTML += "<tr><td colspan='3'><a class='res'>X方胜！</a><hr/><a>步数："+n+"</td></tr>";
+                             re = 1;
+                             break;
+                           }else{
+                             alert("O方胜！");
+                             document.getElementById("tb").innerHTML += "<tr><td colspan='3'><a class='res'>O方胜！</a><hr/><a>步数："+n+"</td></tr>";
+                             re = 1;
+                             break;
+                           }
+                         }
+
+
+                        //斜向判断
+                        /*            0*3+i+3   1*3+i+2   2*3+i+1
+                                      1+i*3   2+(i+1)*3   3+(i+2)*3     */
+                        if (    (  document.getElementById("btn1").value==document.getElementById("btn5").value  &&  document.getElementById("btn5").value==document.getElementById("btn9").value && document.getElementById("btn5").value !=""  )
+                             || (  document.getElementById("btn3").value==document.getElementById("btn5").value  &&  document.getElementById("btn5").value==document.getElementById("btn7").value && document.getElementById("btn5").value !=""  )    )  {
+
+                               if (document.getElementById("btn5").value == "X"){
+                                 alert("X方胜！");
+                                 document.getElementById("tb").innerHTML += "<tr><td colspan='3'><a class='res'>X方胜！</a><hr/><a>步数："+n+"</td></tr>";
+                                 re = 1;
+                                 break;
+                               }else{
+                                 alert("O方胜！");
+                                 document.getElementById("tb").innerHTML += "<tr><td colspan='3'><a class='res'>O方胜！</a><hr/><a>步数："+n+"</td></tr>";
+                                 re = 1;
+                                 break;
+                               }
+                        }
+
+
+                        //平局
+                          p=0;
+                        for (var j=1;j<=9;j++){
+                          if (document.getElementById("btn"+ j ).value != ""  ){
+                            p++;
+                          }
+                        }
+                        if(p==9){
+                          alert("平局！");
+                          document.getElementById("tb").innerHTML += "<tr><td colspan='3'><a class='res'>平局！</a><hr/><a>步数："+n+"</td></tr>";
+                          re = 1;
+                          break;
+                        }
+
+                     }
+
+                   }
+
+           function luo(btn){
+             if (n%2 != 0){
+               btn.value = "0";
+               btn.style.background = "rgba(150,130,70,0.8)";
+             }else{
+               btn.value = "X";
+               btn.style.background = "rgba(150,120,250,0.8)";
+             }
+             n++;
+               over();
+            }
+    </script>
+  </head>
+  <body>
+    <table id="tb" align="center" border="2" style="border-radius:10px;width:400px;height:400px;text-align:center;border:dashed 2px rgb(180,130,80);">
+      <tr id='ttitle'>
+        <th colspan='3' style="background:url('https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3678205486,140819987&fm=26&gp=0.jpg');">
+          <a onclick="location.reload();" style="color:white;font-size:1.5em;font-family:'隶书'">一起来玩井字棋
+          </a>
+        </th>
+      </tr>
+      <tr>
+        <td>
+          <input type="button" id="btn1" class="btn" onclick="luo(this)" >
+        </td>
+        <td>
+          <input type="button" id="btn2" class="btn" onclick="luo(this)" >
+        </td>
+        <td>
+          <input type="button" id="btn3" class="btn" onclick="luo(this)" >
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input type="button" id="btn4" class="btn" onclick="luo(this)" >
+        </td>
+        <td>
+          <input type="button" id="btn5" class="btn" onclick="luo(this)" >
+        </td>
+        <td>
+          <input type="button" id="btn6" class="btn" onclick="luo(this)" >
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input type="button" id="btn7" class="btn" onclick="luo(this)" >
+        </td>
+        <td>
+          <input type="button" id="btn8" class="btn" onclick="luo(this)" >
+        </td>
+        <td>
+          <input type="button" id="btn9" class="btn" onclick="luo(this)" >
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
