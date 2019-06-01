@@ -29,6 +29,7 @@
       var n;
       var re = 0;
       var p;
+      var a=1;  //只用一次
       window.onload = function(){
         n=1;
       }
@@ -40,18 +41,24 @@
 
                      function over(){
                        if (re){
+                         if (a){
+                           document.getElementById("re").play();
+                         }
+                         a=0;
                          return false;
                        }
                        for (var i=0;i<3;i++){
                          //横向判断
                          if (    document.getElementById("btn"+(i*3+1)).value == document.getElementById("btn"+(i*3+2)).value && document.getElementById("btn"+(i*3+2)).value == document.getElementById("btn"+(i*3+3)).value && document.getElementById("btn"+(i*3+3)).value != ""     ){
                            if (document.getElementById("btn"+(i*3+1)).value == "X"){
-                             alert("X方胜！");
+                             document.getElementById("c").play();
+                             document.getElementById("f").play();
                              document.getElementById("tb").innerHTML += "<tr><td colspan='3'><a class='res'>X方胜！</a><hr/><a style='background:gray;color:white;'>步数："+n+"</td></tr>";
                              re = 1;
                              break;
                            }else{
-                             alert("O方胜！");
+                             document.getElementById("c").play();
+                             document.getElementById("e").play();
                              document.getElementById("tb").innerHTML += "<tr><td colspan='3'><a class='res'>O方胜！</a><hr/><a style='background:gray;color:white;'>步数："+n+"</td></tr>";
                              re = 1;
                              break;
@@ -61,12 +68,14 @@
                          //纵向判断
                          if (      document.getElementById("btn"+(0*3+i+1)).value == document.getElementById("btn"+(1*3+i+1)).value && document.getElementById("btn"+(1*3+i+1)).value == document.getElementById("btn"+(2*3+i+1)).value && document.getElementById("btn"+(2*3+i+1)).value != ""    ){
                            if (document.getElementById("btn"+(0*3+i+1)).value == "X"){
-                             alert("X方胜！");
+                             document.getElementById("c").play();
+                             document.getElementById("f").play();
                              document.getElementById("tb").innerHTML += "<tr><td colspan='3'><a class='res'>X方胜！</a><hr/><a style='background:gray;color:white;'>步数："+n+"</td></tr>";
                              re = 1;
                              break;
                            }else{
-                             alert("O方胜！");
+                               document.getElementById("c").play();
+                               document.getElementById("e").play();
                              document.getElementById("tb").innerHTML += "<tr><td colspan='3'><a class='res'>O方胜！</a><hr/><a style='background:gray;color:white;'>步数："+n+"</td></tr>";
                              re = 1;
                              break;
@@ -81,12 +90,14 @@
                              || (  document.getElementById("btn3").value==document.getElementById("btn5").value  &&  document.getElementById("btn5").value==document.getElementById("btn7").value && document.getElementById("btn5").value !=""  )    )  {
 
                                if (document.getElementById("btn5").value == "X"){
-                                 alert("X方胜！");
+                                 document.getElementById("c").play();
+                                 document.getElementById("f").play();
                                  document.getElementById("tb").innerHTML += "<tr><td colspan='3'><a class='res'>X方胜！</a><hr/><a style='background:gray;color:white;'>步数："+n+"</td></tr>";
                                  re = 1;
                                  break;
                                }else{
-                                 alert("O方胜！");
+                                 document.getElementById("c").play();
+                                 document.getElementById("e").play();
                                  document.getElementById("tb").innerHTML += "<tr><td colspan='3'><a class='res'>O方胜！</a><hr/><a style='background:gray;color:white;'>步数："+n+"</td></tr>";
                                  re = 1;
                                  break;
@@ -102,7 +113,8 @@
                           }
                         }
                         if(p==9){
-                          alert("平局！");
+                          document.getElementById("d").play();
+                          document.getElementById("c").play();
                           document.getElementById("tb").innerHTML += "<tr><td colspan='3'><a class='res'>平局！</a><hr/><a style='background:gray;color:white;'>步数："+n+"</td></tr>";
                           re = 1;
                           break;
@@ -115,9 +127,11 @@
            function luo(btn){
              if (n%2 != 0){
                btn.value = "0";
+               document.getElementById("a").play();
                btn.style.background = "rgba(150,130,70,0.8)";
              }else{
                btn.value = "X";
+               document.getElementById("b").play();
                btn.style.background = "rgba(150,120,250,0.8)";
              }
              n++;
@@ -126,8 +140,15 @@
     </script>
   </head>
   <body>
+    <audio id="a" src="http://pic.ibaotu.com/00/56/53/48R888piCy5g.mp3"></audio>
+    <audio id="b" src="http://pic.ibaotu.com/00/57/66/88m888piCBzv.mp3"></audio>
+    <audio id="c" src="http://pic.ibaotu.com/00/57/76/67R888piCzbe.mp3"></audio>
+    <audio id="d" src="http://tsn.baidu.com/text2audio?tex=%E5%B9%B3%E5%B1%80%EF%BC%81&lan=zh&cuid=123&ctp=1&tok=25.4fe227926ad479b1f1774bfea1b13f48.315360000.1861350595.282335-15297333"></audio>
+    <audio id="e" src="http://tsn.baidu.com/text2audio?tex=%E7%90%83%E5%85%88%E7%94%9F%E8%83%9C%E5%87%BA%EF%BC%81&lan=zh&cuid=123&ctp=1&tok=25.4fe227926ad479b1f1774bfea1b13f48.315360000.1861350595.282335-15297333"></audio>
+    <audio id="f" src="http://tsn.baidu.com/text2audio?tex=%E5%8F%89%E5%85%88%E7%94%9F%E8%83%9C%E5%87%BA%EF%BC%81&lan=zh&cuid=123&ctp=1&tok=25.4fe227926ad479b1f1774bfea1b13f48.315360000.1861350595.282335-15297333"></audio>
+    <audio id="re" src="http://tsn.baidu.com/text2audio?tex=%E8%AF%B7%E6%8C%89%E6%A0%87%E9%A2%98%E9%87%8D%E6%96%B0%E5%BC%80%E5%A7%8B&lan=zh&cuid=123&ctp=1&tok=25.4fe227926ad479b1f1774bfea1b13f48.315360000.1861350595.282335-15297333"></audio>
     <table id="tb" align="center" border="2" style="border-radius:10px;width:400px;height:400px;text-align:center;border:dashed 2px rgb(180,130,80);">
-      <tr id='ttitle'>
+      <tr>
         <th colspan='3' style="background:url('https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3678205486,140819987&fm=26&gp=0.jpg');">
           <a onclick="location.reload();" style="color:rgb(60,60,60);font-size:1.5em;font-family:'隶书'">一起来玩井字棋
           </a>
