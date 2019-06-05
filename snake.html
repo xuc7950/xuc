@@ -1,0 +1,288 @@
+<!doctype html>
+  <html>
+	<head>
+	  <title>
+		徐超的贪吃蛇
+	  </title>
+	  <meta charset="utf-8"/>
+      <link href='http://cdn.webfont.youziku.com/webfonts/nomal/119439/19669/5bbf622ef629d8055c526246.css' rel='stylesheet' type='text/css' />
+	</head>
+	
+	<body id="body1">
+	  <script>
+	  
+		//初始化
+		var snakeX = new Array(99);
+		var snakeY = new Array(99);
+		var radius = 35;
+		snakeX[0] =200;
+		snakeY[0] =200;
+		snakeX[1] =200-2*radius;
+		snakeY[1] =200;
+		snakeX[2] =200-4*radius;
+		snakeY[2] =200;
+		var aspect = "r";
+		var about = 35;
+		var len = 3;
+		var score = 0;
+		var died = false;
+		var m = 1;
+		var speed = 250;
+		
+		window.onload = function(){											//装载初始方法
+	    var c = document.getElementById("c");
+		var can = c.getContext("2d");
+		var foodX = Math.random()*(c.width-radius*2)+radius*2;
+		var foodY = Math.random()*(c.height-radius*2)+radius*2;
+		can.fillStyle="yellow";
+		can.strokeStyle="yellow";
+		//can.fillRect(1,1,400,200);
+		
+		
+	    setInterval(															//显示画面，时间为10毫秒
+		function (){
+		  //打印画面
+		  can.clearRect(0,0,c.width,c.height);
+		  can.beginPath();
+		  //控制蛇身数据
+		  for (var i=len-2;i>=0;i--){
+			snakeX[i+1] = snakeX[i];
+			snakeY[i+1] = snakeY[i];
+		  }
+		  
+		  //控制蛇头数据
+		  var jiange = 20;
+		  switch (aspect){
+			  case "u" : snakeY[0]-=2*radius-jiange;	break;
+			  case "d" : snakeY[0]+=2*radius-jiange+10;	break;
+			  case "l" : snakeX[0]-=2*radius-jiange;	break;
+			  case "r" : snakeX[0]+=2*radius-jiange;	break;
+			  case "lu" : snakeX[0]-=2*radius/Math.sqrt(2)-jiange; snakeY[0]-=2*radius/Math.sqrt(2)-jiange;	break;
+			  case "ru" : snakeX[0]+=2*radius/Math.sqrt(2)-jiange; snakeY[0]-=2*radius/Math.sqrt(2)-jiange;	break;
+			  case "ld" : snakeX[0]-=2*radius/Math.sqrt(2)-jiange; snakeY[0]+=2*radius/Math.sqrt(2)-jiange;	break;
+			  case "rd" : snakeX[0]+=2*radius/Math.sqrt(2)-jiange; snakeY[0]+=2*radius/Math.sqrt(2)-jiange;	break;
+			  }
+			  
+			  
+			//越界
+			if (snakeX[0] > c.width)	snakeX[0] = 0;
+			if (snakeX[0] <  0)			snakeX[0] = c.width;
+			if (snakeY[0] > c.height)	snakeY[0] = 0;
+			if (snakeY[0] <  0)			snakeY[0] = c.height;
+			
+			//画蛇头
+			can.beginPath();
+			var juli = Math.sqrt(2)/4*radius;
+			switch (aspect) {
+				case "u": 
+		  can.arc(snakeX[0]-radius/2-5,snakeY[0],radius/2+5,0,Math.PI*2,true);
+		  can.arc(snakeX[0]+radius/2+5,snakeY[0],radius/2+5,0,Math.PI*2,true);	break;
+				case "d":
+		  can.arc(snakeX[0]-radius/2-5,snakeY[0],radius/2+5,0,Math.PI*2,true);
+		  can.arc(snakeX[0]+radius/2+5,snakeY[0],radius/2+5,0,Math.PI*2,true);	break;
+				case "l":
+		  can.arc(snakeX[0],snakeY[0]-radius/2,radius/2,0,Math.PI*2,true);
+		  can.arc(snakeX[0],snakeY[0]+radius/2,radius/2,0,Math.PI*2,true);	break;	
+				case "r":	
+		  can.arc(snakeX[0],snakeY[0]-radius/2,radius/2,0,Math.PI*2,true);	
+		  can.arc(snakeX[0],snakeY[0]+radius/2,radius/2,0,Math.PI*2,true);	break;
+				case "lu":
+		  can.arc(snakeX[0]-juli,snakeY[0]+juli,radius/2,0,Math.PI*2,true);
+		  can.arc(snakeX[0]+juli,snakeY[0]-juli,radius/2,0,Math.PI*2,true);	break;
+				case "ld":
+		  can.arc(snakeX[0]-juli,snakeY[0]-juli,radius/2,0,Math.PI*2,true);
+		  can.arc(snakeX[0]+juli,snakeY[0]+juli,radius/2,0,Math.PI*2,true);	break;
+				case "ru":
+		  can.arc(snakeX[0]-juli,snakeY[0]-juli,radius/2,0,Math.PI*2,true);
+		  can.arc(snakeX[0]+juli,snakeY[0]+juli,radius/2,0,Math.PI*2,true);	break;
+				case "rd":
+		  can.arc(snakeX[0]-juli,snakeY[0]+juli,radius/2,0,Math.PI*2,true);
+		  can.arc(snakeX[0]+juli,snakeY[0]-juli,radius/2,0,Math.PI*2,true);	break;
+				}
+		  can.fillStyle="yellow";
+		  can.fill();
+		  can.closePath();
+		  //画蛇身
+		 for (var i=1;i<len;i++){
+			 can.beginPath();
+			 can.strokeStyle="yellow";
+		  can.arc(snakeX[i],snakeY[i],radius-i,0,2*Math.PI,true);
+		  can.stroke();
+		  can.closePath();
+		 }
+		 //画食物
+		 can.beginPath();
+		 can.fillStyle="red";
+		 can.arc(foodX,foodY,radius-10,0,2*Math.PI,true);
+		 can.fill();
+		  can.closePath();
+		  
+			
+		  if (died){
+			  can.fillStyle = "white";
+			  can.font = "40px 隶书";
+			can.fillText("Game over!"+"\n"+"您的得分为："+score,200,c.height/2);
+			  }
+		
+		
+
+		
+		},speed);																	//显示画面
+	    
+		
+		//特效
+		setInterval(function(){
+			
+		  var img = new Image();
+		  if (m > 30) m=1;
+		  img.src = "images/food2/food_bg ("+m+").png";
+		  m++;
+		can.drawImage(img,foodX-3*radius-8,foodY-3*radius-8);
+			
+			
+			},50);
+		
+		
+		
+		var t = setInterval(function(){
+					//吃到食物
+		if (Math.abs(snakeX[0]-foodX) < 2*radius-20 && Math.abs(snakeY[0]-foodY) < 2*radius-20){
+			document.getElementById("eated").play();
+			foodX = Math.random()*(c.width-radius*2-20)+radius*2;
+			foodY = Math.random()*(c.height-radius*2-20)+radius*2;
+			score++;
+			len++;
+			}
+			document.getElementById("score").innerHTML = score;
+		
+		//判断是否死亡
+		for (var i=1;i<len;i++){
+			if (snakeX[0] == snakeX[i] && snakeY[0] == snakeY[i]){
+			document.getElementById("died").play();	
+			aspect = '';
+			clearInterval(t);
+			window.touchmove = null;
+			died = true;
+			alert("您本局的分数为："+score+"\n"+"刷新以重新开始游戏");
+			}
+		}
+			
+			},1);
+		
+			
+				  
+		  //响应操作
+			  var a = document.getElementById("a");		//获取输入框id
+			  var startX,startY;
+			  var endX,endY;
+		  document.addEventListener('touchstart',function(){
+			  var ev = event || window.event;
+			  startX = parseInt(ev.touches[0].clientX);
+			  startY = parseInt(ev.touches[0].clientY);
+			 // endX = parseInt(ev.touches[0].clientX);
+//			  endY = parseInt(ev.touches[0].clientY);
+			  a.innerHTML = parseInt(ev.touches[0].clientX)+","+parseInt(ev.touches[0].clientY);
+		  });
+		  document.addEventListener('touchmove',function(){
+			  var ev = event || window.event;
+			  ev.preventDefault();
+			  endX = parseInt(ev.touches[0].clientX);
+			  endY = parseInt(ev.touches[0].clientY);
+			  var x = endX - startX;
+			  var y = endY - startY;
+			  if (x > about){
+						  if (y > about){
+							  
+					  a.innerHTML = "右下"+x+","+y;
+					  if (aspect != "lu")
+					  aspect = "rd";
+							}else if (y < -about) {
+								
+					  a.innerHTML = "右上"+x+","+y;
+					  if (aspect != "ld")
+					  aspect = "ru";
+							}else {
+								
+			  		  a.innerHTML = "右"+x+","+y;
+					  if (aspect != "l")
+					  aspect = "r";
+								}
+						  
+			}else if (x < -about) {
+							 if (y > about){
+							  
+					  a.innerHTML = "左下"+x+","+y;
+					  if (aspect != "ru")
+					  aspect = "ld";
+							}else if (y < -about) {
+								
+					  a.innerHTML = "左上"+x+","+y;
+					  if (aspect != "rd")
+					  aspect = "lu";
+
+							}else {
+								
+			  			a.innerHTML = "左"+x+","+y;
+					  if (aspect != "r")
+					  aspect = "l";
+
+								}
+							
+			}else{
+					if (y > 0){
+						
+			  a.innerHTML = "下"+x+","+y;
+					  if (aspect != "u")
+					  aspect = "d";
+
+						}else if (y < -about) {
+							
+			  a.innerHTML = "上"+x+","+y;
+					  if (aspect != "d")
+					  aspect = "u";
+
+							}
+					
+					}
+		  });
+		  
+		  document.addEventListener('touchend',function(){
+			  var ev = event || window.event;
+			  var x = parseInt(endX - startX);
+			  var y = parseInt(endY - startY);
+		  });
+			  
+
+		
+		
+		  
+	  };
+	  
+		  
+	  </script>
+      <div align="center">
+      <hr/>
+      <p style="background:gray;font-size:4em;margin:0 auto;" class="css1508c0ceee1d28f"><strong>贪吃蛇</strong> </p>
+      <hr/>
+      <a style="float:right;margin-right:20%;text-decoration:inherit;"><strong>作者:徐超</strong></a>
+      
+      <b style="background:yellow;">
+      <a style="font-size:2em;">得分：</a>
+      <a id="score" style="font-size:2em;"></a>
+      </b>
+      
+      <br/>
+      </div>
+	  <canvas id="c" width="960" height="1260" style="background:black;">
+		您的浏览器暂不支持canvas，请更换浏览器。
+	  </canvas>
+	  <a id="a" style="font-size:3em;display:none;"></a>
+      <audio id="eated" src="//img95.699pic.com/audio/432/325/5aefca2f61ad6_all.mp3">
+      您的浏览器不支持播放音效
+      </audio>
+      <audio id="died" src="//img95.699pic.com/audio/236/363/5aefc2835bfef_all.mp3">
+      您的浏览器不支持播放音效
+      </audio>
+
+	</body>
+  </html>
