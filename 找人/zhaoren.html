@@ -14,6 +14,16 @@
     </style>
     <script src="students.json"></script>
     <script type="text/javascript">
+    window.onload = function(){
+        if (!localStorage['acc']){
+          if(encodeURI(prompt("Please input the Keygen.")) != "%E8%B6%85%E5%93%A5") {
+            alert("严重警告：\n非法操作！！！");window.close();
+          }else{
+            localStorage['acc'] = true;
+          }
+        }
+    }
+    
       function qkong() {
         if (document.getElementById("befind").value.length==0)
             document.getElementById("find").style.color = "black";
@@ -40,7 +50,7 @@
         var secondUrl = "http://stu.zstu.edu.cn/webroot/decision/view/report?fine_auth_token=&viewlet=%2Fyiban%2FS第二课堂学分.cpt&op=h5&__pi__=true&username=";
         var elelogUrl = "http://stu.zstu.edu.cn/webroot/decision/view/report?fine_auth_token=&viewlet=%2Fyiban%2FS寝室充电查询.cpt&op=h5&__pi__=true&username=";
         var electricUrl = "http://stu.zstu.edu.cn/webroot/decision/view/report?fine_auth_token=&viewlet=%2Fyiban%2FS寝室电费查询.cpt&op=h5&__pi__=true&username=";
-        
+
 		//以名字或学号为索引
 		for (var i=0; i<num ; i++){
           if (zstu[i].姓名.replace(/\s+/g,"") == befind || zstu[i].学号.replace(/\s+/g,"") == befind ){
@@ -49,7 +59,7 @@
           }
         }
 
-		
+
 		//以姓为索引
 		if (index.length == 0){
 			n = 0;
@@ -60,10 +70,10 @@
 				}
 			}
 		}
-		
-		
-        document.getElementById('finded').innerHTML += "已找到"+index.length+"条结果.<hr/>"; 
-		
+
+
+        document.getElementById('finded').innerHTML += "已找到"+index.length+"条结果.<hr/>";
+
 		//打印查询结果
         for (var i=0;i<index.length;i++){
 //                 var str = "<input type='button' value='成绩' onclick='location.href="+scoreUrl+"' />";
@@ -88,8 +98,8 @@
 			//document.getElementById('finded').innerHTML += "<li>姓名："+zstu[index[i]].姓名+"</li><br/><li>班级："+zstu[index[i]].班级+"</li><br/><li>学号："+zstu[index[i]].学号+"</li><br/><li>性别："+zstu[index[i]].性别+"</li><br/><li>寝室号："+zstu[index[i]].寝室号+"</li><br/><li>床号："+zstu[index[i]].床号+"</li><br/><li>备注："+zstu[index[i]].备注+"</li><br/><hr>";
 			document.getElementById('finded').innerHTML += "<li>姓名："+xingming+"</li><br/><li>班级："+banji+"</li><br/><li>学号："+xuehao+"</li><br/><li>性别："+xingbie+"</li><br/><li>寝室号："+qinshihao+"</li><br/><li>床号："+chuanghao+"</li><br/><li>备注："+beizhu+"</li><br/><hr>";
         }
-		
-		
+
+
         document.getElementById("find").style.color = "red";
       }
 
