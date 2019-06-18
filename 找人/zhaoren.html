@@ -38,7 +38,6 @@
       function find(){
         document.getElementById('finded').innerHTML= " ";//清空显示结果
         var n=0;  //个数
-        var num = zstu.length;
         var index = new Array();
         var befind = document.getElementById('befind').value;
 		if (befind == "徐超" || befind == "2017334450090") befind="嘻嘻嘻";
@@ -55,8 +54,10 @@
 
 
 
+
 		//打印本专业查询结果
 		if (document.getElementById("art").checked){
+			var num = art.length;
 			//以名字或学号为索引
 			for (var i=0; i<num ; i++){
 			  if (art[i].姓名.replace(/\s+/g,"") == befind || art[i].学号.replace(/\s+/g,"") == befind ){
@@ -100,6 +101,8 @@
 				document.getElementById('finded').innerHTML += "<li>姓名："+xingming+"</li><br/><li>班级："+banji+"</li><br/><li>学号："+xuehao+"</li><br/><li>性别："+xingbie+"</li><br/><li>寝室号："+qinshihao+"</li><br/><li>床号："+chuanghao+"</li><br/><li>备注："+beizhu+"</li><br/><hr>";
 			}
 		}else{
+		
+			var num = zstu.length;
 			//以名字或学号为索引
 			for (var i=0; i<num ; i++){
 			  if (zstu[i].姓名.replace(/\s+/g,"") == befind || zstu[i].学号.replace(/\s+/g,"") == befind ){
@@ -118,6 +121,7 @@
 					}
 				}
 			}
+			
 			document.getElementById('finded').innerHTML += "已找到"+index.length+"条结果.<hr/>";
 			for (var i=0;i<index.length;i++){
 				var xingming = zstu[index[i]].姓名.replace(/(^\s*)|(\s*$)/g, "");
