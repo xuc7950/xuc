@@ -12,6 +12,7 @@
         alink:yellow;
       }
     </style>
+    <script src="s.json"></script>
     <script src="students.json"></script>
     <script type="text/javascript">
     window.onload = function(){
@@ -51,66 +52,109 @@
         var elelogUrl = "http://stu.zstu.edu.cn/webroot/decision/view/report?fine_auth_token=&viewlet=%2Fyiban%2FS寝室充电查询.cpt&op=h5&__pi__=true&username=";
         var electricUrl = "http://stu.zstu.edu.cn/webroot/decision/view/report?fine_auth_token=&viewlet=%2Fyiban%2FS寝室电费查询.cpt&op=h5&__pi__=true&username=";
 
-		//以名字或学号为索引
-		for (var i=0; i<num ; i++){
-          if (zstu[i].姓名.replace(/\s+/g,"") == befind || zstu[i].学号.replace(/\s+/g,"") == befind ){
-            index[n] = i;
-            n++;
-          }
-        }
 
 
-		//以姓为索引
-		if (index.length == 0){
-			n = 0;
+
+		//打印本专业查询结果
+		if (document.getElementById("art").checked){
+			//以名字或学号为索引
 			for (var i=0; i<num ; i++){
-				if (befind == zstu[i].姓名.replace(/(^\s*)|(\s*$)/g, "")[0] ){
-					index[n] = i;
-					n++;
+			  if (art[i].姓名.replace(/\s+/g,"") == befind || art[i].学号.replace(/\s+/g,"") == befind ){
+				index[n] = i;
+				n++;
+			  }
+			}
+
+			//以姓为索引
+			if (index.length == 0){
+				n = 0;
+				for (var i=0; i<num ; i++){
+					if (befind == art[i].姓名.replace(/(^\s*)|(\s*$)/g, "")[0] ){
+						index[n] = i;
+						n++;
+					}
 				}
 			}
+			document.getElementById('finded').innerHTML += "已找到"+index.length+"条结果.<hr/>";
+			for (var i=0;i<index.length;i++){
+	//                 var str = "<input type='button' value='成绩' onclick='location.href="+scoreUrl+"' />";
+
+					var score = "<a href='"+scoreUrl+art[index[i]].学号+"&xingming="+art[index[i]].姓名+"' >成绩</a>";
+					var lesson = "<a href='"+lessonUrl+art[index[i]].学号+"' >课表</a>";
+					var exam = "<a href='"+examUrl+art[index[i]].学号+"' >考试安排</a>";
+					var dorm = "<a href='"+dormUrl+art[index[i]].学号+"' >寝室人员</a>";
+					var card = "<a href='"+cardUrl+art[index[i]].学号+"' >一卡通</a>";
+					var second = "<a href='"+secondUrl+art[index[i]].学号+"' >第二课堂学分</a>";
+					var elelog = "<a href='"+elelogUrl+art[index[i]].学号+"' >充电记录</a>";
+					var electric = "<a href='"+electricUrl+art[index[i]].学号+"' >电费</a>";
+				document.getElementById('finded').innerHTML += score+lesson+exam+dorm+card+second+elelog+electric;
+				var xingming = art[index[i]].姓名.replace(/(^\s*)|(\s*$)/g, "");
+				var banji = art[index[i]].班级.replace(/(^\s*)|(\s*$)/g, "");
+				var xuehao = art[index[i]].学号.replace(/(^\s*)|(\s*$)/g, "");
+				var xingbie = art[index[i]].性别.replace(/(^\s*)|(\s*$)/g, "");
+				var qinshihao = art[index[i]].寝室号.replace(/(^\s*)|(\s*$)/g, "");
+				var chuanghao = art[index[i]].床号.replace(/(^\s*)|(\s*$)/g, "");
+				var beizhu = art[index[i]].备注.replace(/(^\s*)|(\s*$)/g, "");
+				if (xuehao.replace(/(^\s*)|(\s*$)/g, "") == "2017334450090") {xuehao = "";xingming="";banji="";xingbie="";qinshihao="";chuanghao="";beizhu="admin";};
+				//document.getElementById('finded').innerHTML += "<li>姓名："+art[index[i]].姓名+"</li><br/><li>班级："+art[index[i]].班级+"</li><br/><li>学号："+art[index[i]].学号+"</li><br/><li>性别："+art[index[i]].性别+"</li><br/><li>寝室号："+art[index[i]].寝室号+"</li><br/><li>床号："+art[index[i]].床号+"</li><br/><li>备注："+art[index[i]].备注+"</li><br/><hr>";
+				document.getElementById('finded').innerHTML += "<li>姓名："+xingming+"</li><br/><li>班级："+banji+"</li><br/><li>学号："+xuehao+"</li><br/><li>性别："+xingbie+"</li><br/><li>寝室号："+qinshihao+"</li><br/><li>床号："+chuanghao+"</li><br/><li>备注："+beizhu+"</li><br/><hr>";
+			}
+		}else{
+			//以名字或学号为索引
+			for (var i=0; i<num ; i++){
+			  if (zstu[i].姓名.replace(/\s+/g,"") == befind || zstu[i].学号.replace(/\s+/g,"") == befind ){
+				index[n] = i;
+				n++;
+			  }
+			}
+
+			//以姓为索引
+			if (index.length == 0){
+				n = 0;
+				for (var i=0; i<num ; i++){
+					if (befind == zstu[i].姓名.replace(/(^\s*)|(\s*$)/g, "")[0] ){
+						index[n] = i;
+						n++;
+					}
+				}
+			}
+			document.getElementById('finded').innerHTML += "已找到"+index.length+"条结果.<hr/>";
+			for (var i=0;i<index.length;i++){
+				var xingming = zstu[index[i]].姓名.replace(/(^\s*)|(\s*$)/g, "");
+				var banji = zstu[index[i]].班级.replace(/(^\s*)|(\s*$)/g, "");
+				var xuehao = zstu[index[i]].学号.replace(/(^\s*)|(\s*$)/g, "");
+				var xingbie = zstu[index[i]].性别.replace(/(^\s*)|(\s*$)/g, "");
+					var score = "<a href='"+scoreUrl+xuehao+"&xingming="+xingming+"' >成绩</a>";
+					var lesson = "<a href='"+lessonUrl+xuehao+"' >课表</a>";
+					var exam = "<a href='"+examUrl+xuehao+"' >考试安排</a>";
+					var dorm = "<a href='"+dormUrl+xuehao+"' >寝室人员</a>";
+					var card = "<a href='"+cardUrl+xuehao+"' >一卡通</a>";
+					var second = "<a href='"+secondUrl+xuehao+"' >第二课堂学分</a>";
+					var elelog = "<a href='"+elelogUrl+xuehao+"' >充电记录</a>";
+					var electric = "<a href='"+electricUrl+xuehao+"' >电费</a>";
+				document.getElementById('finded').innerHTML += score+lesson+exam+dorm+card+second+elelog+electric;
+				if (xuehao.replace(/(^\s*)|(\s*$)/g, "") == "2017334450090") {xuehao = "";xingming="";banji="";xingbie="";qinshihao="";chuanghao="";beizhu="admin";};
+				//document.getElementById('finded').innerHTML += "<li>姓名："+zstu[index[i]].姓名+"</li><br/><li>班级："+zstu[index[i]].班级+"</li><br/><li>学号："+zstu[index[i]].学号+"</li><br/><li>性别："+zstu[index[i]].性别+"</li><br/><li>寝室号："+zstu[index[i]].寝室号+"</li><br/><li>床号："+zstu[index[i]].床号+"</li><br/><li>备注："+zstu[index[i]].备注+"</li><br/><hr>";
+				document.getElementById('finded').innerHTML += "<li>姓名："+xingming+"</li><br/><li>性别："+xingbie+"</li><br/><li>学号："+xuehao+"</li><br/><li>班级："+banji+"</li><br/><hr>";
+			}
 		}
-
-
-        document.getElementById('finded').innerHTML += "已找到"+index.length+"条结果.<hr/>";
-
-		//打印查询结果
-        for (var i=0;i<index.length;i++){
-//                 var str = "<input type='button' value='成绩' onclick='location.href="+scoreUrl+"' />";
-
-                var score = "<a href='"+scoreUrl+zstu[index[i]].学号+"&xingming="+zstu[index[i]].姓名+"' >成绩</a>";
-                var lesson = "<a href='"+lessonUrl+zstu[index[i]].学号+"' >课表</a>";
-                var exam = "<a href='"+examUrl+zstu[index[i]].学号+"' >考试安排</a>";
-                var dorm = "<a href='"+dormUrl+zstu[index[i]].学号+"' >寝室人员</a>";
-                var card = "<a href='"+cardUrl+zstu[index[i]].学号+"' >一卡通</a>";
-                var second = "<a href='"+secondUrl+zstu[index[i]].学号+"' >第二课堂学分</a>";
-                var elelog = "<a href='"+elelogUrl+zstu[index[i]].学号+"' >充电记录</a>";
-                var electric = "<a href='"+electricUrl+zstu[index[i]].学号+"' >电费</a>";
-            document.getElementById('finded').innerHTML += score+lesson+exam+dorm+card+second+elelog+electric;
-			var xingming = zstu[index[i]].姓名.replace(/(^\s*)|(\s*$)/g, "");
-			var banji = zstu[index[i]].班级.replace(/(^\s*)|(\s*$)/g, "");
-			var xuehao = zstu[index[i]].学号.replace(/(^\s*)|(\s*$)/g, "");
-			var xingbie = zstu[index[i]].性别.replace(/(^\s*)|(\s*$)/g, "");
-			var qinshihao = zstu[index[i]].寝室号.replace(/(^\s*)|(\s*$)/g, "");
-			var chuanghao = zstu[index[i]].床号.replace(/(^\s*)|(\s*$)/g, "");
-			var beizhu = zstu[index[i]].备注.replace(/(^\s*)|(\s*$)/g, "");
-			if (xuehao.replace(/(^\s*)|(\s*$)/g, "") == "2017334450090") {xuehao = "";xingming="";banji="";xingbie="";qinshihao="";chuanghao="";beizhu="admin";};
-			//document.getElementById('finded').innerHTML += "<li>姓名："+zstu[index[i]].姓名+"</li><br/><li>班级："+zstu[index[i]].班级+"</li><br/><li>学号："+zstu[index[i]].学号+"</li><br/><li>性别："+zstu[index[i]].性别+"</li><br/><li>寝室号："+zstu[index[i]].寝室号+"</li><br/><li>床号："+zstu[index[i]].床号+"</li><br/><li>备注："+zstu[index[i]].备注+"</li><br/><hr>";
-			document.getElementById('finded').innerHTML += "<li>姓名："+xingming+"</li><br/><li>班级："+banji+"</li><br/><li>学号："+xuehao+"</li><br/><li>性别："+xingbie+"</li><br/><li>寝室号："+qinshihao+"</li><br/><li>床号："+chuanghao+"</li><br/><li>备注："+beizhu+"</li><br/><hr>";
-        }
 
 
         document.getElementById("find").style.color = "red";
       }
 
-
+		
     </script>
   </head>
   <body bgcolor="black">
     <div align="center">
       <hr/><hr/><hr/><hr/>
       <marquee scrollamount="25" style="color:red;font-size:1.5em;">欢 &emsp;迎 &emsp;进 &emsp;入 &emsp;本 &emsp;查 &emsp;询 &emsp;系 &emsp;统</marquee>
-      <hr/><hr/><hr/><hr/><br/>
+      <hr/><hr/><hr/><hr/>
+	  <input type="radio" id="art" value="2017级艺设学院" name="class" checked /><span style="color:white">2017级艺设学院</span>
+		&emsp;&emsp;
+	  <input type="radio" id="all" value="全校学生" name="class" /><span style="color:white">全校学生</span>
+	  <br/>
       <input type="text" id="befind" onchange="qkong();" style="opacity:0.8;border-radius:10px;width:500px;height:100px;font-size:3em;">
       <input type="button" name="" value="查找" id="find" onclick="find()" style="opacity:0.7;border-radius:10px;width:200px;height:100px;font-size:3em;">
       <p id="finded" style="color:white;font-size:3em;border-radius:10px;"></p>
